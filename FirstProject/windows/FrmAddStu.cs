@@ -2,6 +2,7 @@
 using System;
 using System.Data.SqlClient;
 using System.Windows.Forms;
+using System.Data;
 
 namespace FirstProject
 {
@@ -25,13 +26,12 @@ namespace FirstProject
 
         private void InitGrade()
         {
-            SqlDataReader reader = null;
-            reader = Util.getGrade();
-            while (reader.Read())
-            {
-                cbxGrade.Items.Add(reader[1]);
-            }
-            reader.Close();
+            string tableName = "Gradle";
+            
+            DataSet ds;
+            ds = Util.getGrade(tableName);
+            cbxGrade.DataSource = ds.Tables[tableName];
+            cbxGrade.ValueMember = "GradeName";
             DBHelper.Close();
         }
 

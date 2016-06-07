@@ -45,21 +45,30 @@ namespace FirstProject.util
             return sum;
         }
 
-        public static SqlDataReader getGrade()
+        public static DataSet getGrade(string tableName)
         {
-            SqlDataReader reader;
+            DataSet ds;
             string sqlStr = "select * from Grade";
-            reader = DBHelper.ExecuteReader(sqlStr);
-            return reader;
+            //reader = DBHelper.ExecuteReader(sqlStr);
+            ds = DBHelper.dataSet(sqlStr, tableName);
+            return ds;
+        }
+        private static DataSet ds;
+        public static DataSet getStuList(string tableName)
+        {
+            
+            string sqlStr= "select S.StudentNo,S.studentName,S.Gender,G.GradeName,S.Phone from student as s,grade as G where S.GradeId = G.GradeId";
+            ds = DBHelper.dataSet(sqlStr,tableName);
+            return ds;
         }
 
-        public static SqlDataReader getStuList()
+        private void dataView()
         {
-            SqlDataReader reader = null;
-            string sqlStr= "select * from Student";
-            reader = DBHelper.ExecuteReader(sqlStr);
-            return reader;
+            DataView dv = new DataView(ds.Tables[0]);
+
         }
+
+
         public static SqlDataReader searchStu(string type,string value)
         {
             SqlDataReader reader = null;
